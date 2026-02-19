@@ -14,7 +14,9 @@
       background: linear-gradient(180deg, #fdf8f0, #f5ebe0);
     }
 
-    .font-elegant { font-family: "Cormorant Garamond", serif; }
+    .font-elegant {
+      font-family: "Cormorant Garamond", serif;
+    }
 
     .form-input {
       width: 100%;
@@ -61,19 +63,39 @@
   </h1>
 
   <p class="text-center text-[#8b7355] mb-6">
-    Со радост ве покануваме на нашата свадба ❤️
+    Со радост ве покануваме на нашата свадбена веселба ❤️
   </p>
 
   <!-- INFO -->
-  <div class="text-center mb-8">
-    <p class="font-elegant text-2xl text-[#000000]">датум и час</p>
-    <p class="font-elegant text-2xl text-[#5a4a3a]">23.08.2026</p>
-    <p class="font-elegant text-2xl text-[#8b7355]">
-      прием од 18:30 - 19:00 часот
+ <div class="text-center mb-8">
+
+  <!-- DATE WITH ICON -->
+  <div class="flex items-center justify-center gap-2 mt-2">
+    <img src="schedule.png" alt="Date" class="w-6 h-6">
+    <p class="font-elegant text-2xl text-[#000000]">
+      датум и час
+    </p>
+  </div>
+
+  <p class="font-elegant text-2xl text-[#5a4a3a]">23.08.2026</p>
+  <p class="font-elegant text-2xl text-[#8b7355]">
+    прием од 19:00 - 19:30 часот
+  </p>
+
+
+    <!-- LOCATION WITH ICON -->
+    <div class="flex items-center justify-center gap-2 mt-5">
+      <img src="location.png" alt="Location" class="w-6 h-6">
+      <p class="font-elegant text-2xl text-[#000000]">
+        локација
+      </p>
+    </div>
+
+    <p class="mt-2 text-[#8b7355]">
+      Вила Ина, Водно, Скопје
     </p>
 
-    <p class="font-elegant text-2xl text-[#000000] mt-4">локација</p>
-    <p class="mt-2 text-[#8b7355]">Villa Ina, Скопје</p><br>
+    <br>
 
     <!-- MAP -->
     <iframe class="map"
@@ -89,7 +111,7 @@
 
     <p class="text-center font-elegant text-2xl text-[#5a4a3a]">
       Ве молиме потврдете го вашето присуство <br>
-      најдоцна до 01.08.2026
+      најдоцна до 23.07.2026
     </p>
 
     <!-- MAIN NAME -->
@@ -98,11 +120,6 @@
       <input class="form-input" id="name" required>
     </div>
 
-    <!-- EMAIL -->
-    <div>
-      <p class="font-elegant text-2xl text-[#5a4a3a]">Е-маил</p>
-      <input class="form-input" id="email" type="email" required>
-    </div>
 
     <!-- ATTENDING -->
     <div class="font-elegant text-2xl text-[#5a4a3a] space-y-2">
@@ -119,23 +136,22 @@
       </label>
     </div>
 
-    <!-- GUESTS + MENU SECTION -->
+    <!-- MENU + GUESTS -->
     <div id="guestsDiv" class="space-y-4">
 
       <p class="font-elegant text-2xl text-[#5a4a3a]">
-        Мени за вас и вашите гости
+        Мени
       </p>
 
-      <!-- MAIN PERSON MENU -->
+      <!-- MAIN MENU -->
       <div class="p-3 border border-[#e8c9a8] rounded-lg bg-white space-y-2">
         <p class="font-elegant text-xl text-[#5a4a3a]">
-          Вашето мени
+          Вашето мени (Гостин 1)
         </p>
 
         <select id="mainMenu" class="form-input" required>
-          <option value="">Избери мени</option>
+          <option value="">Одбери мени</option>
           <option value="standard">Стандардно</option>
-          <option value="vegetarian">Вегетаријанско</option>
           <option value="vegan">Веганско</option>
         </select>
       </div>
@@ -143,7 +159,7 @@
       <!-- EXTRA GUESTS -->
       <div id="guestList" class="space-y-3"></div>
 
-      <!-- ADD GUEST BUTTON -->
+      <!-- ADD BUTTON -->
       <button type="button" id="addGuestBtn"
         class="w-full py-2 rounded-lg bg-[#e8c9a8] text-[#5a4a3a] font-semibold hover:bg-[#d4a574]">
         + Додај гостин
@@ -164,15 +180,19 @@
       Испрати одговор
     </button>
 
-    <p id="statusMsg" class="text-center text-sm"></p>
+<p id="statusMsg" class="text-center text-sm text-[#d4a574] font-semibold"></p>
 
   </form>
 </div>
 
-<!-- FIREBASE SCRIPT -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDPqnM0CWvuY0IfdmVXO3jgrfZNUG1f9Q8",
@@ -192,13 +212,14 @@
   const guestsDiv = document.getElementById("guestsDiv");
   const guestList = document.getElementById("guestList");
   const addGuestBtn = document.getElementById("addGuestBtn");
+  const mainMenu = document.getElementById("mainMenu");
 
-  // Hide guests section until "YES"
   guestsDiv.style.display = "none";
+  mainMenu.required = false;
 
-  let guestCount = 0;
+  let guestCount = 1;
 
-  // ✅ Add extra guest
+  // ✅ Add guest function
   function addGuest() {
     guestCount++;
 
@@ -208,7 +229,7 @@
 
     guestDiv.innerHTML = `
       <p class="font-elegant text-xl text-[#5a4a3a]">
-        Дополнителен гостин ${guestCount}
+        Гостин ${guestCount}
       </p>
 
       <input
@@ -221,7 +242,6 @@
       <select class="form-input guest-menu" required>
         <option value="">Избери мени</option>
         <option value="standard">Стандардно</option>
-        <option value="vegetarian">Вегетаријанско</option>
         <option value="vegan">Веганско</option>
       </select>
     `;
@@ -231,27 +251,30 @@
 
   addGuestBtn.addEventListener("click", addGuest);
 
-  // ✅ Attending logic
-  const attendingRadios = document.querySelectorAll('input[name="attending"]');
-
-  attendingRadios.forEach(radio => {
+  // ✅ Attendance logic
+  document.querySelectorAll('input[name="attending"]').forEach(radio => {
     radio.addEventListener("change", () => {
-
-      if (radio.value === "no" && radio.checked) {
-        guestsDiv.style.display = "none";
-        guestList.innerHTML = "";
-        guestCount = 0;
+      if (radio.value === "yes") {
+        guestsDiv.style.display = "block";
+        mainMenu.required = true;
       }
 
-      if (radio.value === "yes" && radio.checked) {
-        guestsDiv.style.display = "block";
+      if (radio.value === "no") {
+        guestsDiv.style.display = "none";
+        mainMenu.required = false;
+
+        // reset extra guests
+        guestList.innerHTML = "";
+        guestCount = 1;
       }
     });
   });
 
-  // ✅ Submit
+  // ✅ Submit form
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    statusMsg.textContent = "";
 
     try {
       const attendingValue =
@@ -260,14 +283,13 @@
       let guestsArray = [];
 
       if (attendingValue === "yes") {
-
-        // MAIN PERSON auto guest
+        // main guest
         guestsArray.push({
           name: document.getElementById("name").value,
-          menu: document.getElementById("mainMenu").value
+          menu: mainMenu.value
         });
 
-        // EXTRA guests
+        // extra guests
         const guestNames = document.querySelectorAll(".guest-name");
         const guestMenus = document.querySelectorAll(".guest-menu");
 
@@ -279,21 +301,23 @@
         });
       }
 
+      // ✅ Save to Firestore
       await addDoc(collection(db, "rsvp"), {
         name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
         attending: attendingValue,
         guests: guestsArray,
         message: document.getElementById("message").value,
         createdAt: serverTimestamp()
       });
 
-      statusMsg.textContent = "Успешно зачувано!";
-      form.reset();
+      statusMsg.textContent = "Ви благодариме на одговорот!";
 
+      // reset form
+      form.reset();
       guestsDiv.style.display = "none";
+      mainMenu.required = false;
       guestList.innerHTML = "";
-      guestCount = 0;
+      guestCount = 1;
 
     } catch (err) {
       console.error(err);
@@ -301,6 +325,7 @@
     }
   });
 </script>
+
 
 </body>
 </html>
