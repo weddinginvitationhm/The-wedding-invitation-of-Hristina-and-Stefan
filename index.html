@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="mk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Свадбена Покана</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: "Montserrat", sans-serif;
+      background: linear-gradient(180deg, #fdf8f0, #f5ebe0);
+    }
+
+    .font-elegant { font-family: "Cormorant Garamond", serif; }
+
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e8c9a8;
+      border-radius: 8px;
+    }
+
+    .map {
+      width: 100%;
+      padding: 9px;
+      border: 2px solid #e8c9a8;
+      border-radius: 8px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: #d4a574;
+      color: white;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background: #c9956c;
+    }
+
+    input[type="radio"] {
+      accent-color: #5a4a3a;
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-6">
+
+<div class="w-full max-w-lg bg-white/80 p-10 rounded-2xl shadow-xl">
+
+  <!-- TITLE -->
+  <h1 class="font-elegant text-5xl text-center mb-4 text-[#5a4a3a]">
+    Христина & Стефан
+  </h1>
+
+  <p class="text-center text-[#8b7355] mb-6">
+    Со радост ве покануваме на нашата свадба ❤️
+  </p>
+
+  <!-- INFO -->
+  <div class="text-center mb-8">
+    <p class="font-elegant text-2xl text-[#000000]">датум и час</p>
+    <p class="font-elegant text-2xl text-[#5a4a3a]">23.08.2026</p>
+    <p class="font-elegant text-2xl text-[#8b7355]">
+      прием од 18:30 - 19:00 часот
+    </p>
+
+    <p class="font-elegant text-2xl text-[#000000] mt-4">локација</p>
+    <p class="mt-2 text-[#8b7355]">Villa Ina, Скопје</p><br>
+
+    <!-- MAP -->
+    <iframe class="map"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2965.8882274053126!2d21.379340900000003!3d41.9812095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135411553ca6560f%3A0x91616fd726f96d57!2sVilla%20Ina!5e0!3m2!1sen!2smk!4v1770719799578!5m2!1sen!2smk"
+      height="250"
+      allowfullscreen=""
+      loading="lazy">
+    </iframe>
+  </div>
+
+  <!-- FORM -->
+  <form id="rsvpForm" class="space-y-6">
+
+    <p class="text-center font-elegant text-2xl text-[#5a4a3a]">
+      Ве молиме потврдете го вашето присуство <br>
+      најдоцна до 01.08.2026
+    </p>
+
+    <!-- MAIN NAME -->
+    <div>
+      <p class="font-elegant text-2xl text-[#5a4a3a]">Име и презиме</p>
+      <input class="form-input" id="name" required>
+    </div>
+
+    <!-- EMAIL -->
+    <div>
+      <p class="font-elegant text-2xl text-[#5a4a3a]">Е-маил</p>
+      <input class="form-input" id="email" type="email" required>
+    </div>
+
+    <!-- ATTENDING -->
+    <div class="font-elegant text-2xl text-[#5a4a3a] space-y-2">
+      <p>Дали ќе присуствувате?</p>
+
+      <label class="flex items-center gap-2">
+        <input type="radio" name="attending" value="yes" required>
+        <span>Да, ќе присуствувам</span>
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input type="radio" name="attending" value="no">
+        <span>Не, нема да присуствувам</span>
+      </label>
+    </div>
+
+    <!-- GUESTS + MENU SECTION -->
+    <div id="guestsDiv" class="space-y-4">
+
+      <p class="font-elegant text-2xl text-[#5a4a3a]">
+        Мени за вас и вашите гости
+      </p>
+
+      <!-- MAIN PERSON MENU -->
+      <div class="p-3 border border-[#e8c9a8] rounded-lg bg-white space-y-2">
+        <p class="font-elegant text-xl text-[#5a4a3a]">
+          Вашето мени
+        </p>
+
+        <select id="mainMenu" class="form-input" required>
+          <option value="">Избери мени</option>
+          <option value="standard">Стандардно</option>
+          <option value="vegetarian">Вегетаријанско</option>
+          <option value="vegan">Веганско</option>
+        </select>
+      </div>
+
+      <!-- EXTRA GUESTS -->
+      <div id="guestList" class="space-y-3"></div>
+
+      <!-- ADD GUEST BUTTON -->
+      <button type="button" id="addGuestBtn"
+        class="w-full py-2 rounded-lg bg-[#e8c9a8] text-[#5a4a3a] font-semibold hover:bg-[#d4a574]">
+        + Додај гостин
+      </button>
+
+    </div>
+
+    <!-- MESSAGE -->
+    <div>
+      <p class="font-elegant text-2xl text-[#5a4a3a]">
+        Порака за младенците (опционално)
+      </p>
+      <textarea class="form-input" id="message"></textarea>
+    </div>
+
+    <!-- SUBMIT -->
+    <button class="submit-btn" type="submit">
+      Испрати одговор
+    </button>
+
+    <p id="statusMsg" class="text-center text-sm"></p>
+
+  </form>
+</div>
+
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPqnM0CWvuY0IfdmVXO3jgrfZNUG1f9Q8",
+    authDomain: "weddinginvitation-8415b.firebaseapp.com",
+    projectId: "weddinginvitation-8415b",
+    storageBucket: "weddinginvitation-8415b.firebasestorage.app",
+    messagingSenderId: "754203729573",
+    appId: "1:754203729573:web:b8858cb5beaf1d64a6b74c"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const form = document.getElementById("rsvpForm");
+  const statusMsg = document.getElementById("statusMsg");
+
+  const guestsDiv = document.getElementById("guestsDiv");
+  const guestList = document.getElementById("guestList");
+  const addGuestBtn = document.getElementById("addGuestBtn");
+
+  // Hide guests section until "YES"
+  guestsDiv.style.display = "none";
+
+  let guestCount = 0;
+
+  // ✅ Add extra guest
+  function addGuest() {
+    guestCount++;
+
+    const guestDiv = document.createElement("div");
+    guestDiv.className =
+      "p-3 border border-[#e8c9a8] rounded-lg space-y-2 bg-white";
+
+    guestDiv.innerHTML = `
+      <p class="font-elegant text-xl text-[#5a4a3a]">
+        Дополнителен гостин ${guestCount}
+      </p>
+
+      <input
+        type="text"
+        placeholder="Име и презиме"
+        class="form-input guest-name"
+        required
+      >
+
+      <select class="form-input guest-menu" required>
+        <option value="">Избери мени</option>
+        <option value="standard">Стандардно</option>
+        <option value="vegetarian">Вегетаријанско</option>
+        <option value="vegan">Веганско</option>
+      </select>
+    `;
+
+    guestList.appendChild(guestDiv);
+  }
+
+  addGuestBtn.addEventListener("click", addGuest);
+
+  // ✅ Attending logic
+  const attendingRadios = document.querySelectorAll('input[name="attending"]');
+
+  attendingRadios.forEach(radio => {
+    radio.addEventListener("change", () => {
+
+      if (radio.value === "no" && radio.checked) {
+        guestsDiv.style.display = "none";
+        guestList.innerHTML = "";
+        guestCount = 0;
+      }
+
+      if (radio.value === "yes" && radio.checked) {
+        guestsDiv.style.display = "block";
+      }
+    });
+  });
+
+  // ✅ Submit
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    try {
+      const attendingValue =
+        document.querySelector('input[name="attending"]:checked').value;
+
+      let guestsArray = [];
+
+      if (attendingValue === "yes") {
+
+        // MAIN PERSON auto guest
+        guestsArray.push({
+          name: document.getElementById("name").value,
+          menu: document.getElementById("mainMenu").value
+        });
+
+        // EXTRA guests
+        const guestNames = document.querySelectorAll(".guest-name");
+        const guestMenus = document.querySelectorAll(".guest-menu");
+
+        guestNames.forEach((input, index) => {
+          guestsArray.push({
+            name: input.value,
+            menu: guestMenus[index].value
+          });
+        });
+      }
+
+      await addDoc(collection(db, "rsvp"), {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        attending: attendingValue,
+        guests: guestsArray,
+        message: document.getElementById("message").value,
+        createdAt: serverTimestamp()
+      });
+
+      statusMsg.textContent = "Успешно зачувано!";
+      form.reset();
+
+      guestsDiv.style.display = "none";
+      guestList.innerHTML = "";
+      guestCount = 0;
+
+    } catch (err) {
+      console.error(err);
+      statusMsg.textContent = "Грешка при зачувување.";
+    }
+  });
+</script>
+
+</body>
+</html>
