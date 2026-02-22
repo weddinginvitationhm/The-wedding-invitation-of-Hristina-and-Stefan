@@ -70,24 +70,24 @@
  <div class="text-center mb-8">
 
   <!-- DATE WITH ICON -->
-  <div class="flex items-center justify-center gap-2 mt-2">
-    <img src="schedule.png" alt="Date" class="w-6 h-6">
+  <div class="relative flex items-center justify-center mt-2">
+    <img src="schedule.png" alt="Date" class="w-6 h-6 absolute left-1/2 -translate-x-[100px]">
     <p class="font-elegant text-2xl text-[#000000]">
-      датум и час
+      Датум и час
     </p>
   </div>
 
   <p class="font-elegant text-2xl text-[#5a4a3a]">23.08.2026</p>
   <p class="font-elegant text-2xl text-[#8b7355]">
-    прием од 19:00 - 19:30 часот
+    Прием од 19:00 - 19:30 часот
   </p>
 
 
     <!-- LOCATION WITH ICON -->
-    <div class="flex items-center justify-center gap-2 mt-5">
-      <img src="location.png" alt="Location" class="w-6 h-6">
+    <div class="relative flex items-center justify-center mt-5">
+      <img src="location.png" alt="Location" class="w-6 h-6 absolute left-1/2 -translate-x-[90px]">
       <p class="font-elegant text-2xl text-[#000000]">
-        локација
+        Локација
       </p>
     </div>
 
@@ -162,7 +162,7 @@
       <!-- ADD BUTTON -->
       <button type="button" id="addGuestBtn"
         class="w-full py-2 rounded-lg bg-[#e8c9a8] text-[#5a4a3a] font-semibold hover:bg-[#d4a574]">
-        + Додај гостин
+        + Додадете гостин
       </button>
 
     </div>
@@ -219,7 +219,6 @@
 
   let guestCount = 1;
 
-  // ✅ Add guest function
   function addGuest() {
     guestCount++;
 
@@ -251,7 +250,6 @@
 
   addGuestBtn.addEventListener("click", addGuest);
 
-  // ✅ Attendance logic
   document.querySelectorAll('input[name="attending"]').forEach(radio => {
     radio.addEventListener("change", () => {
       if (radio.value === "yes") {
@@ -270,7 +268,6 @@
     });
   });
 
-  // ✅ Submit form
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -301,7 +298,6 @@
         });
       }
 
-      // ✅ Save to Firestore
       await addDoc(collection(db, "rsvp"), {
         name: document.getElementById("name").value,
         attending: attendingValue,
@@ -312,7 +308,6 @@
 
       statusMsg.textContent = "Ви благодариме на одговорот!";
 
-      // reset form
       form.reset();
       guestsDiv.style.display = "none";
       mainMenu.required = false;
